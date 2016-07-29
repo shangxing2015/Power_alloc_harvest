@@ -1,3 +1,5 @@
 __author__ = 'shangxing'
 
-print max(1,2)
+import math
+
+print math.log(1+2*2,2)

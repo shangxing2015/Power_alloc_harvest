@@ -26,7 +26,7 @@ class QAgent:
     # functions
 
     # q-learning parameters
-    self.gamma = 0.5
+    self.gamma = 0.6
     self.epsilon = INITIAL_EPSILON
 
     self.alpha = INITIAL_ALPHA
@@ -50,11 +50,14 @@ class QAgent:
 
       # print some info
       log = False
-      if count > T_THRESHOLD - 10:
+      if count > T_THRESHOLD - 20:
         if count % 1 == 0:
           print(count)
           print(self.epsilon)
+          print('avg reward')
           print(self.R)
+          print('count')
+          print(self.count)
           log = True
 
       _, self.action = self._get_max_q_value(self.state, log)
@@ -72,11 +75,12 @@ class QAgent:
 
   def _get_max_q_value(self, state, log):
 
-    print state
+
     tmp_max, tmp_action = 0, self.all_actions[state][0]
 
     # print info
     if log:
+      print('Q_value')
       print self.Q
 
     for action in self.all_actions[state]:
@@ -99,7 +103,33 @@ class QAgent:
 
     return tmp_max, tmp_action
 
-  # # check if policy is convergent
+
+  def get_policy(self):
+
+    Q_state_list = []
+    for i in self.Q:
+      if i[0] not in Q_state_list:
+        Q_state_list.append(i[0])
+
+    Q_value_dict = {}
+
+    for q_state in Q_state_list:
+
+      temp_max = 0
+      temp_action = self.all_actions[q_state][0]
+
+      for action in self.all_actions[q_state]:
+        if self.Q[(q_state, action)] > temp_max:
+          temp_max = self.Q[(q_state, action)]
+          temp_action = action
+
+      Q_value_dict[q_state] = temp_action
+
+    return Q_value_dict
+
+
+
+  # #check if policy is convergent
   # def _check_cvg(self, prev_value_dict, count_cvg):
   #   Q_state_list = []
   #   for i in self.Q:

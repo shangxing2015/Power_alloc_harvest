@@ -56,7 +56,9 @@ class Environment:
 
             p_t = self.state_space[0]
 
+
         self.current_state = min(self.current_state+p_t-action, self.q_max)
+
 
 
     def get_state(self):
@@ -74,12 +76,14 @@ class Environment:
                 break
 
         if check:
-
             x_t = self.chan_state[i+1]
+
 
         else:
 
             x_t = self.chan_state[0]
+
+
 
         reward = math.log(1+action*x_t,2)
 

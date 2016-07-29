@@ -37,7 +37,7 @@ for i in range(T_THRESHOLD):
 
     total += reward
 
-    action = brain.observe_and_act(observation, action, i)
+    action = brain.observe_and_act(observation, reward, i)
 
 
     if count % PERIOD == 0:
@@ -49,6 +49,7 @@ for i in range(T_THRESHOLD):
             count, avg_reward, str(observation), str(action), duration))
         f.write('\n')
 
+print brain.get_policy()
 
 f.close()
 
